@@ -1,524 +1,354 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Lunarise free</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>LUNARISE SLIDE DESIGN v12 - Fixed Logic</title>
-
     
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-
     
-
     <style>
-
         .f-montserrat { font-family: 'Montserrat', sans-serif; }
-
         .f-lora { font-family: 'Lora', serif; }
-
         .f-garamond { font-family: 'EB Garamond', serif; }
-
         .f-josefin { font-family: 'Josefin Sans', sans-serif; }
-
         .f-righteous { font-family: 'Righteous', cursive; }
-
         .f-playfair { font-family: 'Playfair Display', serif; }
-
         .f-android { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
         .web-title { font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: -1px; }
 
         .slide-card { 
-
             position: relative; 
-
             overflow: hidden;
-
             background-size: cover; 
-
             background-position: center;
-
             display: flex; 
-
             flex-direction: column; 
-
             justify-content: center; 
-
             align-items: center;
-
             padding: 40px 30px;
-
             border-radius: 0px; 
-
         }
 
         .ratio-9-16 { width: 320px; aspect-ratio: 9/16; }
-
         .ratio-4-5 { width: 350px; aspect-ratio: 4/5; }
 
         .box-block { 
-
             display: block; padding: 20px; border-radius: 12px; text-align: center; 
-
             white-space: pre-wrap !important; word-wrap: break-word; 
-
         }
-
         .box-stripes { 
-
             display: inline; padding: 4px 10px; border-radius: 4px; 
-
             box-decoration-break: clone; -webkit-box-decoration-break: clone; 
-
             line-height: 1.8; white-space: pre-wrap !important; word-wrap: break-word; 
-
         }
-
         
-
         .text-wrapper { 
-
             max-width: 100%; 
-
             text-align: center; 
-
             white-space: pre-wrap; 
-
         }
-
         
-
         [contenteditable="true"]:focus {
-
             outline: 2px dashed #3b82f6;
-
             background: rgba(59, 130, 246, 0.1);
-
         }
 
         .page-indicator {
-
             position: absolute; top: 20px; right: 20px; 
-
             font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 11px;
-
-            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); z-index: 50;
-
+            color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); z-index: 40;
         }
 
         #slideContainer {
-
             width: 100%;
-
             display: flex;
-
             flex-wrap: wrap;
-
             gap: 2rem;
-
             justify-content: center;
-
             padding: 2rem 0 5rem 0;
-
         }
 
+        .slide-actions {
+            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; opacity: 0; transition: opacity 0.2s ease; z-index: 50;
+        }
+        .slide-card:hover .slide-actions { opacity: 1; }
     </style>
-
 </head>
-
 <body class="bg-zinc-100 p-4">
 
     <div class="max-w-[1200px] mx-auto">
-
         <header class="mb-8 text-center">
-
             <h1 class="web-title text-4xl text-zinc-900">LUNARISE SLIDE DESIGN</h1>
-
             <p class="text-[10px] tracking-[0.3em] text-zinc-500 uppercase font-bold mt-1">Professional Content Engine</p>
-
         </header>
 
         <div class="flex flex-col gap-8">
-
             <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-zinc-200">
-
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-[11px]">
-
                     <div class="space-y-4">
-
                         <div class="space-y-2">
-
                             <label class="block font-bold text-zinc-700 uppercase">Latar Belakang</label>
-
                             <input type="file" id="imageInput" accept="image/*" onchange="handleImage(this)" class="w-full border p-2 rounded-xl text-[10px] mb-2">
-
                             <div class="flex items-center gap-2 p-2 bg-zinc-50 rounded-xl border">
-
                                 <input type="color" id="bgColor" value="#f4f1ea" class="w-10 h-8 rounded cursor-pointer" onchange="resetToPlain()">
-
                                 <span class="text-zinc-500 italic">Warna Polos</span>
-
                             </div>
-
                         </div>
-
                         <div class="space-y-2">
-
                             <label class="block font-bold text-red-600 uppercase">Pilih Rasio Kanvas</label>
-
                             <select id="canvasRatio" class="w-full p-2 border rounded-lg bg-red-50 border-red-200 outline-none font-bold" onchange="renderSlides()">
-
                                 <option value="ratio-9-16">Portrait 9:16 (Reels/TikTok)</option>
-
                                 <option value="ratio-4-5">Portrait 4:5 (Threads/IG Feed)</option>
-
                             </select>
-
                         </div>
-
                     </div>
 
                     <div class="space-y-4">
-
                         <div class="space-y-2">
-
                             <label class="block font-bold text-zinc-700 uppercase">Jenis Font</label>
-
                             <select id="fontStyle" class="w-full p-2 border rounded-lg bg-zinc-50 outline-none" onchange="renderSlides()">
-
                                 <option value="f-montserrat">Montserrat</option>
-
                                 <option value="f-lora">Lora</option>
-
                                 <option value="f-garamond">Garamond</option>
-
                                 <option value="f-josefin">Josefin Sans</option>
-
                                 <option value="f-righteous">Righteous</option>
-
                                 <option value="f-playfair">Playfair Display</option>
-
                                 <option value="f-android">Android System</option>
-
                             </select>
-
                         </div>
-
                         <div class="space-y-2">
-
                             <label class="block font-bold text-blue-600 uppercase">Bentuk Teks Box</label>
-
                             <select id="boxMode" class="w-full p-2 border rounded-lg bg-blue-50 border-blue-200 outline-none font-bold" onchange="renderSlides()">
-
                                 <option value="block">Bentuk: Kotak Rapi (Block)</option>
-
                                 <option value="stripes">Bentuk: Ikuti Baris (Stripes)</option>
-
                                 <option value="none">Tanpa Box (Polos)</option>
-
                             </select>
-
                         </div>
-
                     </div>
 
                     <div class="p-4 bg-zinc-50 rounded-2xl border border-zinc-200 space-y-3">
-
-                        <label class="block font-bold text-zinc-700 uppercase">Gaya & Warna Teks</label>
-
-                        <div class="flex items-center gap-3">
-
-                            <input type="color" id="textColor" value="#ffffff" class="w-10 h-8 rounded cursor-pointer" onchange="renderSlides()">
-
-                            <button onclick="toggleFormat('bold')" id="btnBold" class="w-8 h-8 bg-white border rounded font-bold">B</button>
-
-                            <button onclick="toggleFormat('italic')" id="btnItalic" class="w-8 h-8 bg-white border rounded italic">I</button>
-
+                        <div class="flex justify-between items-center">
+                            <label class="font-bold text-zinc-700 uppercase">Gaya & Warna Teks</label>
+                            <span id="fontValText" class="text-blue-600 font-bold bg-white px-2 py-0.5 rounded border">20px</span>
                         </div>
-
-                        <input type="range" id="fontSize" min="12" max="40" value="20" class="w-full accent-zinc-900" oninput="renderSlides()">
-
+                        <div class="flex items-center gap-3">
+                            <input type="color" id="textColor" value="#ffffff" class="w-10 h-8 rounded cursor-pointer" onchange="renderSlides()">
+                            <button onclick="toggleFormat('bold')" id="btnBold" class="w-8 h-8 bg-white border rounded font-bold">B</button>
+                            <button onclick="toggleFormat('italic')" id="btnItalic" class="w-8 h-8 bg-white border rounded italic">I</button>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <button onclick="adjustValue('fontSize', -1)" class="w-6 h-6 bg-white border rounded-lg font-bold shadow-sm active:bg-zinc-100">-</button>
+                                <input type="range" id="fontSize" min="12" max="40" value="20" class="flex-1 accent-zinc-900" oninput="updateLabel('fontSize')">
+                                <button onclick="adjustValue('fontSize', 1)" class="w-6 h-6 bg-white border rounded-lg font-bold shadow-sm active:bg-zinc-100">+</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="space-y-4">
-
                         <div class="p-4 bg-zinc-50 rounded-2xl border border-zinc-200 space-y-2">
-
-                            <label class="block font-bold text-zinc-700 uppercase">Warna & Opacity Box</label>
-
+                            <div class="flex justify-between items-center">
+                                <label class="font-bold text-zinc-700 uppercase">Warna & Opacity Box</label>
+                                <span id="opacityValText" class="text-blue-600 font-bold bg-white px-2 py-0.5 rounded border">75%</span>
+                            </div>
                             <input type="color" id="boxColor" value="#000000" class="w-full h-8 rounded-lg cursor-pointer" onchange="renderSlides()">
-
-                            <input type="range" id="boxOpacity" min="0" max="100" value="75" oninput="renderSlides()" class="w-full accent-zinc-900">
-
+                            <div class="flex items-center gap-2">
+                                <button onclick="adjustValue('boxOpacity', -5)" class="w-6 h-6 bg-white border rounded-lg font-bold shadow-sm active:bg-zinc-100">-</button>
+                                <input type="range" id="boxOpacity" min="0" max="100" value="75" oninput="updateLabel('boxOpacity')" class="flex-1 accent-zinc-900">
+                                <button onclick="adjustValue('boxOpacity', 5)" class="w-6 h-6 bg-white border rounded-lg font-bold shadow-sm active:bg-zinc-100">+</button>
+                            </div>
                         </div>
-
                         <textarea id="inputText" class="w-full h-16 p-3 border border-zinc-200 rounded-2xl text-sm outline-none focus:border-blue-400" placeholder="Masukkan naskah panjang..."></textarea>
-
                     </div>
-
                 </div>
 
                 <div class="flex gap-4 mt-6">
-
                     <button onclick="renderSlides()" class="flex-1 bg-blue-600 text-white py-4 rounded-xl font-bold uppercase shadow-lg active:scale-95 transition-all">Cek Preview</button>
-
                     <button onclick="downloadAll()" id="btnDownload" class="flex-1 bg-zinc-900 text-white py-4 rounded-xl font-bold uppercase shadow-xl active:scale-95 transition-all">Download Semua (.PNG)</button>
-
                 </div>
-
             </div>
 
             <div id="slideContainer"></div>
-
         </div>
-
     </div>
 
     <script>
-
         let customBg = "";
-
         let formats = { bold: false, italic: false };
 
         function handleImage(input) {
-
             const reader = new FileReader();
-
             reader.onload = (e) => { customBg = e.target.result; renderSlides(); };
-
             reader.readAsDataURL(input.files[0]);
-
         }
 
         function resetToPlain() {
-
             customBg = "";
-
             document.getElementById('imageInput').value = "";
-
             renderSlides();
-
         }
 
         function toggleFormat(type) {
-
             formats[type] = !formats[type];
-
             document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).classList.toggle('bg-zinc-900', formats[type]);
-
             document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).classList.toggle('text-white', formats[type]);
-
             renderSlides();
+        }
 
+        // Memperbarui visual angka indikator saat digeser atau diklik tombol +/-
+        function updateLabel(id) {
+            const val = document.getElementById(id).value;
+            if(id === 'fontSize') {
+                document.getElementById('fontValText').innerText = val + 'px';
+            } else if(id === 'boxOpacity') {
+                document.getElementById('opacityValText').innerText = val + '%';
+            }
+            renderSlides();
+        }
+
+        function adjustValue(id, amount) {
+            const input = document.getElementById(id);
+            let val = parseInt(input.value) + amount;
+            if (val < parseInt(input.min)) val = input.min;
+            if (val > parseInt(input.max)) val = input.max;
+            input.value = val;
+            updateLabel(id);
         }
 
         function renderSlides() {
-
             const rawText = document.getElementById('inputText').value;
-
             const container = document.getElementById('slideContainer');
-
             if(!rawText.trim()) return;
 
             let chunks = [];
-
             let i = 0;
 
-            // PERBAIKAN LOGIKA: Benar-benar mengikuti 200-230 karakter tanpa langsung memotong di Enter
-
             while (i < rawText.length) {
-
                 let limit = 230;
-
                 let end = i + limit;
-
                 if (end < rawText.length) {
-
-                    // Cari spasi atau baris baru HANYA setelah mencapai batas karakter tertentu
-
-                    // Kita cari titik potong terbaik antara indeks 200 sampai 230
-
                     let textSegment = rawText.substring(i, end);
-
                     let lastSpace = textSegment.lastIndexOf(' ');
-
                     let lastNewline = textSegment.lastIndexOf('\n');
-
                     
-
-                    // Gunakan pemotong yang paling mendekati akhir (230), baik itu spasi atau enter
-
                     let bestCut = Math.max(lastSpace, lastNewline);
-
-                    if (bestCut > 180) { // Pastikan potongannya tidak terlalu pendek
-
+                    if (bestCut > 180) { 
                         chunks.push(rawText.substring(i, i + bestCut).trim());
-
                         i += bestCut;
-
                     } else {
-
-                        // Jika tidak ada spasi/enter yang layak, potong paksa di 230
-
                         chunks.push(rawText.substring(i, end).trim());
-
                         i = end;
-
                     }
-
                 } else {
-
                     chunks.push(rawText.substring(i).trim());
-
                     break;
-
                 }
-
             }
 
+            container.innerHTML = "";
+            chunks.forEach((txt) => {
+                createSlideElement(txt);
+            });
+            updatePageNumbers();
+        }
+
+        function createSlideElement(text, targetElement = null) {
             const font = document.getElementById('fontStyle').value;
-
             const bMode = document.getElementById('boxMode').value;
-
             const fSize = document.getElementById('fontSize').value;
-
             const tColor = document.getElementById('textColor').value;
-
             const bColor = document.getElementById('boxColor').value;
-
             const sBgColor = document.getElementById('bgColor').value;
-
             const ratioClass = document.getElementById('canvasRatio').value;
-
             const opacity = document.getElementById('boxOpacity').value / 100;
-
             const r = parseInt(bColor.slice(1,3), 16), g = parseInt(bColor.slice(3,5), 16), b = parseInt(bColor.slice(5,7), 16);
 
-            container.innerHTML = "";
+            const el = targetElement || document.createElement('div');
+            el.className = `slide-card shadow-2xl ${ratioClass}`;
+            
+            if(customBg) {
+                el.style.backgroundImage = `url(${customBg})`;
+            } else {
+                el.style.backgroundColor = sBgColor;
+                el.style.backgroundImage = "none";
+            }
+            
+            let boxStyle = `background:rgba(${r},${g},${b},${opacity}); color:${tColor}; font-size:${fSize}px;`;
+            if(bMode === 'none') boxStyle = `background:transparent; color:${tColor}; font-size:${fSize}px;`;
+            const textFormatting = `font-weight:${formats.bold?'bold':'normal'}; font-style:${formats.italic?'italic':'normal'};`;
 
-            chunks.forEach((txt, idx) => {
+            el.innerHTML = `
+                <div class="page-indicator"></div>
+                <div class="text-wrapper ${font}">
+                    <span contenteditable="true" 
+                          class="${bMode === 'stripes' ? 'box-stripes' : (bMode === 'block' ? 'box-block' : '')}" 
+                          style="${boxStyle} ${textFormatting}">${text}</span>
+                </div>
+                <div class="slide-actions">
+                    <button onclick="addSlideAfter(this)" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-2 py-1 rounded shadow" title="Tambah Slide Setelah Ini">+</button>
+                    <button onclick="removeSlide(this)" class="bg-red-600 hover:bg-red-700 text-white font-bold text-[10px] px-2 py-1 rounded shadow" title="Hapus Slide Ini">×</button>
+                </div>
+            `;
 
-                const el = document.createElement('div');
+            if (!targetElement) {
+                document.getElementById('slideContainer').appendChild(el);
+            }
+        }
 
-                el.className = `slide-card shadow-2xl ${ratioClass}`;
-
-                
-
-                if(customBg) {
-
-                    el.style.backgroundImage = `url(${customBg})`;
-
-                } else {
-
-                    el.style.backgroundColor = sBgColor;
-
+        function updatePageNumbers() {
+            const slides = document.querySelectorAll('.slide-card');
+            slides.forEach((slide, idx) => {
+                const indicator = slide.querySelector('.page-indicator');
+                if (indicator) {
+                    indicator.innerText = `${idx + 1}/${slides.length}`;
                 }
-
-                
-
-                let boxStyle = `background:rgba(${r},${g},${b},${opacity}); color:${tColor}; font-size:${fSize}px;`;
-
-                if(bMode === 'none') boxStyle = `background:transparent; color:${tColor}; font-size:${fSize}px;`;
-
-                const textFormatting = `font-weight:${formats.bold?'bold':'normal'}; font-style:${formats.italic?'italic':'normal'};`;
-
-                el.innerHTML = `
-
-                    <div class="page-indicator">${idx+1}/${chunks.length}</div>
-
-                    <div class="text-wrapper ${font}">
-
-                        <span contenteditable="true" 
-
-                              class="${bMode === 'stripes' ? 'box-stripes' : (bMode === 'block' ? 'box-block' : '')}" 
-
-                              style="${boxStyle} ${textFormatting}">${txt}</span>
-
-                    </div>
-
-                `;
-
-                container.appendChild(el);
-
             });
+        }
 
+        function addSlideAfter(button) {
+            const currentSlide = button.closest('.slide-card');
+            const newSlide = document.createElement('div');
+            createSlideElement("Tulis teks slide baru di sini...", newSlide);
+            currentSlide.after(newSlide);
+            updatePageNumbers();
+        }
+
+        function removeSlide(button) {
+            const currentSlide = button.closest('.slide-card');
+            currentSlide.remove();
+            updatePageNumbers();
         }
 
         async function downloadAll() {
-
             const slides = document.querySelectorAll('.slide-card');
-
             if(!slides.length) return alert("Preview belum dibuat!");
-
             const btn = document.getElementById('btnDownload');
-
             const originalText = btn.innerText;
-
             btn.innerText = "MENGUNDUH...";
-
             
-
             const sessionID = Math.floor(Date.now() / 1000);
-
             const ratioName = document.getElementById('canvasRatio').value === 'ratio-9-16' ? '9x16' : '4x5';
 
             for(let i=0; i<slides.length; i++){
-
                 const canvas = await html2canvas(slides[i], { 
-
                     scale: 2, 
-
                     useCORS: true,
-
                     logging: false,
-
                     backgroundColor: null 
-
                 });
-
                 const link = document.createElement('a');
-
                 link.download = `LUNARISE_${ratioName}_${sessionID}_${i+1}.png`;
-
                 link.href = canvas.toDataURL("image/png");
-
                 link.click();
-
                 await new Promise(r => setTimeout(r, 600)); 
-
             }
-
             btn.innerText = originalText;
-
         }
-
     </script>
-
 </body>
-
-</html>
-    
-  </body>
-  
 </html>
